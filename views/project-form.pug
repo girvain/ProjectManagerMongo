@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  include includes/navbar.pug
+  .container.mt-5
+    .row
+      .col-md-6.col-sm-12.offset-md-3
+        .card.border-primary
+            .card-header #{title}
+                .btn-group.float-right
+                    a.btn.float-right.text-muted(href="/dashboard")
+                        i.fas.fa-arrow-left.mr-2 
+                        | Back
+            .card-body
+                form(action='', method="post")
+                    .form-group
+                        label(for="name") Title
+                        input.form-control(type="text" id="name" name="name" value=(undefined===project ? '' : project.name) )
+                    .form-group
+                        label(for="description") Description
+                        input.form-control(type="text" id="description" name="description" value=(undefined===project ? '' : project.description) )
+                    button.btn.btn-primary.btn-block(type="submit") #{button}
+
+                    include includes/errors.pug
+          
+

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  include includes/navbar.pug
+  .container.mt-5
+    .row
+      .col-md-6.col-sm-12.offset-md-3
+        .card.border-primary
+            .card-header #{title}
+                .btn-group.float-right
+                    a.btn.float-right.text-muted(href="#" onclick="history.go(-1)")
+                        i.fas.fa-arrow-left.mr-2 
+                        | Back
+            .card-body
+                form(action="" method="POST")
+                    .form-group
+                        label.col-form-label(for="title") Title
+                        input#title.form-control(type="text", name="title" required="true" value=(undefined===task ? '' : task.title))
+                    .form-group
+                        label.col-form-label(for="description") Description
+                        input#description.form-control(type="text", name="description" required="true" value=(undefined===task ? '' : task.description))
+                    .form-group
+                        label.col-form-label(for="due_date") Due Date
+                        input#due_date.form-control(type="date", name="due_date" required="true" value=(undefined===task ? '' : task.due_date))
+                    button.btn.btn-primary.btn-block(type="submit") #{button}
+
+                    include includes/errors.pug
+          
+

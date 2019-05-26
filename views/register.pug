@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    .container
+        .row.mt-5
+            .col-md-6.m-auto
+                .card.card-body
+                    h1.text-center.mb-3
+                        i.fas.fa-user-plus.mr-2
+                        | Register
+                    form(action="/users/register", method="post")
+                        .form-group
+                            label(for="name") Name
+                            input.form-control(type="name" id="name" name="name" placeholder="Enter Name")
+                        .form-group
+                            label(for="email") Email
+                            input.form-control(type="email" id="email" name="email" placeholder="Enter Email")
+                        .form-group
+                            label(for="password") Password
+                            input.form-control(type="password" id="password" name="password" placeholder="Create Password")
+                        .form-group
+                            label(for="password2") Confirm Password
+                            input.form-control(type="password" id="password2" name="password2" placeholder="Confirm Password")
+                        button.btn.btn-primary.btn-block(type="submit") Register
+                    p.lead.mt-4 Already have an account?&nbsp;
+                        a(href="/users/login") Login here!
+                    include includes/errors.pug

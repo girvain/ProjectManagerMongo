@@ -1,0 +1,37 @@
+#+Project Notes
+* Project management feature
+** data structure
+*** Project List
+    A list of all the projects the user has.
+    - Data structure
+      Project title
+      Project description
+*** Project Object
+    Project title
+    Project Description
+    Milestones [{ description, due date, completion date }]
+    Members of the project
+** Passwords
+*** Mongo
+    F9hcDb4vX!PWk-T
+*** Users
+   gavinross88@hotmail.co.uk - p
+   lauren@gmail.com - p
+** TODO
+   - FLASH MESSAGES for errors
+     1) Add user to project - "username not found"
+     2) complete, edit and delete - "some sorta data not found error"
+   - format dates
+*** Non-functional features
+   - get the edit functions into the data model
+   - get text from selected milestone into the edit-task form
+   - set complete back to uncompleted
+   - Notification from project creation
+     come up with a way to notify user of project creation after redirect (flash message)
+
+* Users
+** Data Structure
+   Email
+   Name
+   Password
+   Projects

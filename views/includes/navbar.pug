@@ -1,0 +1,22 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  .container
+    a.navbar-brand(href="#") GØALS
+    button.navbar-toggler(type="button" data-toggle="collapse" data-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle Navigation")
+      span.navbar-toggler-icon
+
+    #topNav.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          a.nav-link(href="/dashboard") Projects
+      ul.navbar-nav
+        //- li.nav-item
+        //-   a.nav-link Welcome, #{name}
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle(data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false")
+            i.fas.fa-user
+          .dropdown-menu.dropdown-menu-right
+            //- a.dropdown-item(href='/logout') My Account
+            //- a.dropdown-item(href='/logout') Change Password
+            //- .dropdown-divider
+            a.dropdown-item(href='/logout') Log out
+

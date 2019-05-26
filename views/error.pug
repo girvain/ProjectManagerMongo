@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .container 
+    .error-wrapper
+      .error-message.text-center
+        if error
+          h1= error.status
+          h2= message
+          i.fas.fa-exclamation-circle.fa-7x.mt-2

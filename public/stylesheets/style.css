@@ -1,0 +1,46 @@
+.add-btn {
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  background: #303030;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s linear;
+  border: none;
+}
+
+a.add-btn:hover {
+  text-decoration: none;
+}
+
+a {
+  color: #375a7e;
+}
+a:hover {
+  color: #5188be;
+}
+
+.highlight {
+  cursor: pointer;
+}
+
+.error-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .add-btn {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
