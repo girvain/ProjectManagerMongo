@@ -30,7 +30,7 @@ var UserSchema = new mongoose.Schema({
   ],
   members: [
     {
-      unique: true,
+//      unique: true, // this had to come out because mongo checks all array values for uniqueness just like a object member like email in the user.js
       type: String
     }
   ]

@@ -1,18 +1,18 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-var User = require("../models/users");
-var Projects = require("../models/projects");
-var mid = require("../middleware");
+var User = require('../models/users');
+var Projects = require('../models/projects');
+var mid = require('../middleware');
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
-  res.render("index", {
-    title: "Welcome"
+router.get('/', function(req, res, next) {
+  res.render('index', {
+    title: 'Welcome'
   });
 });
 
 //  GET /dashboard
-router.get("/dashboard", mid.loggedIn, (req, res, next) => {
+router.get('/dashboard', mid.loggedIn, (req, res, next) => {
   User.findById(req.session.userId).exec((error, user) => {
     if (error) {
       return next(error);
@@ -28,27 +28,27 @@ router.get("/dashboard", mid.loggedIn, (req, res, next) => {
         })
         .then(function(listOfJobs) {
           //console.log(listOfJobs);
-          return res.render("dashboard", {
-            title: "Dashboard",
+          return res.render('dashboard', {
+            title: 'Dashboard',
             name: user.name,
             projects: listOfJobs
           });
         })
         .catch(function(error) {
-          res.status(500).send("one of the queries failed", error);
+          res.status(500).send('one of the queries failed', error);
         });
     }
   }); // end of User.findbyid
 });
 
 // GET /logout
-router.get("/logout", function(req, res, next) {
+router.get('/logout', function(req, res, next) {
   // delete session object
   req.session.destroy(function(err) {
     if (err) {
       return next(err);
     } else {
-      return res.redirect("/");
+      return res.redirect('/');
     }
   });
 });

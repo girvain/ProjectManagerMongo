@@ -19,7 +19,7 @@ var UserSchema = new mongoose.Schema({
   },
   projects: [
     {
-      unique: true,
+//      unique: true,
       type: String
     }
   ]

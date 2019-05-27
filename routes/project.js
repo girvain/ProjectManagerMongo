@@ -28,18 +28,15 @@ router.post("/create", (req, res, next) => {
       description
     });
   } else {
-    Projects.create(project, function(error, data) {
-      if (error) {
+     Projects.create(project, function(error, data) {
+       if (error) {
+         console.log(error);
         return next(error);
       } else {
         // Update the current user's projects with the newly created one's ID
-        User.findOneAndUpdate({
-            _id: req.session.userId
-          }, {
-            $push: {
-              projects: data._id
-            }
-          },
+        User.findOneAndUpdate(
+          { _id: req.session.userId },
+          { $push: { projects: data._id } },
           (error, success) => {
             if (error) {
               console.log(error);
@@ -53,6 +50,7 @@ router.post("/create", (req, res, next) => {
     });
   }
 });
+
 
 // GET /edit project
 router.get("/edit/:id", (req, res, next) => {
