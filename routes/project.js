@@ -28,15 +28,19 @@ router.post("/create", (req, res, next) => {
       description
     });
   } else {
-     Projects.create(project, function(error, data) {
-       if (error) {
-         console.log(error);
+    Projects.create(project, function(error, data) {
+      if (error) {
+        console.log(error);
         return next(error);
       } else {
         // Update the current user's projects with the newly created one's ID
-        User.findOneAndUpdate(
-          { _id: req.session.userId },
-          { $push: { projects: data._id } },
+        User.findOneAndUpdate({
+            _id: req.session.userId
+          }, {
+            $push: {
+              projects: data._id
+            }
+          },
           (error, success) => {
             if (error) {
               console.log(error);
@@ -97,24 +101,26 @@ router.post("/edit/:id", (req, res, next) => {
       });
     });
   } else {
-    // update existing project with the new project details
+    // update existing project with the new project details, this is nessessary to get the milestones
     Projects.findById(req.params.id, (err, project) => {
-      if (err) throw err;
-      let milestones = project.milestones;
+        if (err) throw err;
+      })
+      .then(result => {
+        let newProject = new Projects({
+          name: name,
+          description: description,
+          milestones: result.milestones, // take the milestones from the findById query result
+          _id: req.params.id
+        });
 
-      let newProject = new Projects({
-        name: name,
-        description: description,
-        milestones: milestones,
-        _id: req.params.id
+        Projects.findByIdAndUpdate(req.params.id, newProject, {}, err => {
+          if (err) {
+            return next(err);
+          }
+          res.redirect("/dashboard");
+        });
+
       });
-      Projects.findByIdAndUpdate(req.params.id, newProject, {}, err => {
-        if (err) {
-          return next(err);
-        }
-        res.redirect("/dashboard");
-      });
-    });
   }
 });
 
@@ -169,73 +175,59 @@ router.post("/edit/:id", (req, res, next) => {
 //   );
 // });
 
-// async delete method
-router.post("/delete/:id", async (req, res, next) => {
+// async delete method using promise.all() to ensure that all the db queries have
+// executed before redirecting
+router.post('/delete/:id', (req, res, next) => {
 
-  const project = await Projects.findByIdAndUpdate(
-    req.params.id, {
-      $pull: {
-        members: req.session.userId
-      }
-    },
-    function(err, model) {
-      return model;
-    }
-  );
-
-  await User.findByIdAndUpdate(
-    req.session.userId, {
-      $pull: {
-        projects: req.params.id
-      }
-    },
-    function(err, model) {
-      if (err) {
-        console.log(err);
-        return res.send(err);
-      } else {
-        // implement missing form logic
-        // res.redirect(req.get("referer"));
-      }
-    }
-  );
-
-  res.redirect(req.get("referer"));
-
+  Promise.all([
+      Projects.findByIdAndUpdate(
+        req.params.id, {
+          $pull: {
+            members: req.session.userId
+          }
+        },
+        function(err, model) {
+          return model;
+        }
+      ),
+      User.findByIdAndUpdate(
+        req.session.userId, {
+          $pull: {
+            projects: req.params.id
+          }
+        },
+        function(err, model) {
+          if (err) {
+            console.log(err);
+            return res.send(err);
+          } else {
+            // implement missing form logic
+            // res.redirect(req.get('referer'));
+          }
+        }
+      )
+    ])
+    .then(() => {
+      res.redirect(req.get('referer'));
+    })
+    .catch(err => {
+      return next(err);
+    });
 });
-
-//  User.findByIdAndUpdate(
-//    req.session.userId,
-//    {
-//      $pull: {
-//        projects: req.params.id
-//      }
-//    },
-//    function(err, model) {
-//      if (err) {
-//        console.log(err);
-//        return res.send(err);
-//      } else {
-//        // implement missing form logic
-//        // res.redirect(req.get("referer"));
-//      }
-//    }
-//  );
-// res.redirect(req.get("referer"));
 
 
 // TASK ROUTES
 
 //  GET /project task list
-router.get("/:id", mid.loggedIn, (req, res, next) => {
+router.get('/:id', mid.loggedIn, (req, res, next) => {
   User.findById(req.session.userId).exec((error, user) => {
     if (error) {
       return next(error);
     } else {
       Projects.findById(req.params.id).then(project => {
         //console.log(project);
-        res.render("project", {
-          title: "project",
+        res.render('project', {
+          title: 'project',
           projectID: project._id,
           name: user.name,
           projectName: project.name,
@@ -247,8 +239,32 @@ router.get("/:id", mid.loggedIn, (req, res, next) => {
   }); // end of User.findbyid
 });
 
+
+router.get('/:id', mid.loggedIn, (req, res, next) => {
+  User.findById(req.session.userId).exec((error, whyIsThisHere) => {
+    if (error) {
+      return next(error);
+    }
+  })
+    .then(user => {
+      Projects.findById(req.params.id, project => {
+        res.render('project', {
+          title: 'project',
+          projectID: project._id,
+          name: user.name,
+          projectName: project.name,
+          description: project.description,
+          milestones: project.milestones
+        });
+      });
+    })
+    .catch(err => {
+      return next(err);
+    });
+});
+
 // POST /new-task
-router.post("/:id/task/new", (req, res, next) => {
+router.post('/:id/task/new', (req, res, next) => {
   if (req.body.title && req.body.description && req.body.due_date) {
     Projects.findById({
       _id: req.params.id
@@ -259,30 +275,30 @@ router.post("/:id/task/new", (req, res, next) => {
         due_date: req.body.due_date
       });
       project.save();
-      res.redirect(req.get("referer"));
+      res.redirect(req.get('referer'));
     });
   } else {
     // implement missing form logic
-    res.redirect(req.get("referer"));
+    res.redirect(req.get('referer'));
   }
 });
 
 // GET /edit-task form
-router.get("/:id/edit/:milestoneId", (req, res, next) => {
+router.get('/:id/edit/:milestoneId', (req, res, next) => {
   Projects.findById({
     _id: req.params.id
   }).then(project => {
     let milestone = project.milestones.id(req.params.milestoneId);
-    res.render("task-form", {
-      title: "Edit Task",
+    res.render('task-form', {
+      title: 'Edit Task',
       task: milestone,
-      button: "Update"
+      button: 'Update'
     });
   });
 });
 
 // POST /edit-task
-router.post("/:id/edit/:milestoneId", (req, res, next) => {
+router.post('/:id/edit/:milestoneId', (req, res, next) => {
   if (req.body.title && req.body.description && req.body.due_date) {
     Projects.findById({
       _id: req.params.id
@@ -292,16 +308,16 @@ router.post("/:id/edit/:milestoneId", (req, res, next) => {
       milestone.description = req.body.description;
       milestone.due_date = req.body.due_date;
       project.save();
-      res.redirect("/project/" + req.params.id);
+      res.redirect('/project/' + req.params.id);
     });
   } else {
     // implement missing form logic
-    res.redirect(req.get("referer"));
+    res.redirect(req.get('referer'));
   }
 });
 
 // Post /complete-task
-router.post("/:id/complete-task/:milestoneId", (req, res, next) => {
+router.post('/:id/complete-task/:milestoneId', (req, res, next) => {
   if (req.body.completionDate) {
     Projects.findById({
       _id: req.params.id
@@ -310,16 +326,16 @@ router.post("/:id/complete-task/:milestoneId", (req, res, next) => {
       let milestone = project.milestones.id(req.params.milestoneId);
       milestone.completeDate = req.body.completionDate;
       project.save();
-      res.redirect(req.get("referer"));
+      res.redirect(req.get('referer'));
     });
   } else {
     // implement missing form logic
-    res.redirect(req.get("referer"));
+    res.redirect(req.get('referer'));
   }
 });
 
 // POST /delete-task
-router.post("/:id/delete-task/:milestoneId", (req, res, next) => {
+router.post('/:id/delete-task/:milestoneId', (req, res, next) => {
   Projects.findByIdAndUpdate(
     req.params.id, {
       $pull: {
@@ -334,20 +350,20 @@ router.post("/:id/delete-task/:milestoneId", (req, res, next) => {
         return res.send(err);
       } else {
         // implement missing form logic
-        res.redirect(req.get("referer"));
+        res.redirect(req.get('referer'));
       }
     }
   );
 });
 
 // Get /view-task
-router.get("/:id/view/:milestoneId", (req, res, next) => {
+router.get('/:id/view/:milestoneId', (req, res, next) => {
   Projects.findById({
     _id: req.params.id
   }).then(project => {
     let milestone = project.milestones.id(req.params.milestoneId);
     let title = milestone.title;
-    res.render("task", {
+    res.render('task', {
       title: title,
       milestone
     });

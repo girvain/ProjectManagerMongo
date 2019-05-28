@@ -1,11 +1,11 @@
 #+TITLE todo list
-* TODO Fix Duplicate key error when creating more than one project
-* TODO change database queries to promises/async await when using multiple queries
-  - [ ] Change queries in project.js
-    - [ ] change /edit/project
-    - [ ] change delete/:id
-    - [ ] change get task list
-    - [ ] 
 
-  - [ ] Change query in get dashboard in index.js
+* DONE Fix Duplicate key error when creating more than one project
+* DONE change database queries to promises/async await when using multiple queries
+  - [X] Change queries in project.js
+    - [X] change /edit/project
+    - [X] change delete/:id
+    - [X] change get task list
+
+  - [X] Change query in get dashboard in index.js
 
