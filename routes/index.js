@@ -43,5 +43,16 @@ router.post('/talks/add/:id', mid.loggedIn, (req, res, next) => {
     });
 });
 
+router.post('/talks/remove/:id', mid.loggedIn, (req, res, next) => {
+    const talkId = req.params.id;
+    const userId = req.session.userId;
+
+    User.findByIdAndUpdate(userId,
+        {$pull: {talks: talkId}},
+        (err, result) => {
+        return res.json(result);
+    });
+});
+
 
 module.exports = router;
