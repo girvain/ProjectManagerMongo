@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 var dashRouter = require('./routes/dashboard');
 var projectRouter = require('./routes/project');
 
+var cors = require('cors');
 var app = express();
 
 // mongodb connection
@@ -37,6 +38,8 @@ app.use(
     // cookie: { maxAge: 600000 }
   })
 );
+
+app.use(cors());
 
 // make user ID available in templates
 app.use(function(req, res, next) {

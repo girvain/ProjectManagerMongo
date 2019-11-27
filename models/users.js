@@ -44,6 +44,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
         return callback(error);
       }
     });
+    // return callback(null, user);
   });
 };
 // hash password before saving to database
