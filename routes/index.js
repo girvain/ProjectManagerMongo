@@ -4,15 +4,39 @@ var User = require('../models/users');
 var Talk = require('../models/talksModel');
 var mid = require('../middleware');
 
-
-router.get('/newhope', mid.loggedIn, (req, res, next) => {
-    return res.json('Awrite their obe one ya  jake!');
-});
-
-router.get('/talks', mid.loggedIn, (req, res, next) => {
+/**
+ * Send all the talks from the database to be edited/filters etc by the client.
+ */
+router.get('/talks/all', mid.loggedIn, (req, res, next) => {
     Talk.find({}, (err, talks) => {
         return res.json(talks);
     })
+});
+
+/**
+ * Get the array of all the talks the client is interested in/registered for.
+ */
+router.get('/talks/user', mid.loggedIn, async (req, res, next) => {
+    await User.find({_id: req.session.userId}, (err, user) => {
+        res.json(user[0].talks);
+    })
+});
+
+/**
+ * Send a new array of values to be updated on the server. Ideal for when the user
+ * is adding and removing a lot on the client. Should only be sent when the client is
+ * finished, i.e with a "save" button etc.
+ * NOTE: this will replace the previous array in the user document.
+ */
+router.post('/talks/save', mid.loggedIn, (req, res, next) => {
+    const talks = req.body.talks;
+    const userId = req.session.userId;
+
+    User.findByIdAndUpdate({_id: userId },
+        {talks: talks},
+        (err, result) => {
+        return res.json(result);
+    });
 });
 
 router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
