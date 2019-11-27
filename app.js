@@ -9,8 +9,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var dashRouter = require('./routes/dashboard');
-var projectRouter = require('./routes/project');
+// var projectRouter = require('./routes/project');
 
 var cors = require('cors');
 var app = express();
@@ -20,7 +19,7 @@ mongoose.connect(
   //  'mongodb+srv://ross-crawford:L6RZipd2YEkS1o3J@defaultcluster-qldkn.mongodb.net/projectManager?retryWrites=true',
   // { useNewUrlParser: true }
 //  'mongodb+srv://gavin:F9hcDb4vX!PWk-T@cluster1-blsjo.gcp.mongodb.net/users?retryWrites=true'
-  'mongodb://localhost:27017/projectmanager'
+  'mongodb://localhost:27017/conference'
 );
 var db = mongoose.connection;
 // mongo error
@@ -59,8 +58,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/dashboard', dashRouter);
-app.use('/project', projectRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -75,7 +72,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
+    res.json(err);
 });
 
 module.exports = app;

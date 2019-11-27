@@ -4,21 +4,6 @@ var User = require('../models/users');
 var mid = require('../middleware');
 // var bcrypt = require("bcryptjs");
 
-// /* GET users listing. */
-// router.get("/", function(req, res, next) {
-//   // res.send("probably wont be using this page at /users");
-//   res.render("index", {
-//     title: "Welcome"
-//   });
-// });
-
-// GET /register
-// router.get('/register', function (req, res, next) {
-//     res.render('register', {
-//         title: 'Register',
-//     });
-// });
-
 // POST /register
 router.post('/register', (req, res, next) => {
     // ROSS' REGISTER PROCESS
@@ -65,7 +50,8 @@ router.post('/register', (req, res, next) => {
                 });
             } else {
                 req.session.userId = user._id;
-                return res.redirect('/dashboard');
+                // return res.redirect('/dashboard');
+                return res.json('successful registering');
             }
         });
     }
