@@ -18,7 +18,7 @@ var app = express();
 mongoose.connect(
   //  'mongodb+srv://ross-crawford:L6RZipd2YEkS1o3J@defaultcluster-qldkn.mongodb.net/projectManager?retryWrites=true',
   // { useNewUrlParser: true }
-//  'mongodb+srv://gavin:F9hcDb4vX!PWk-T@cluster1-blsjo.gcp.mongodb.net/users?retryWrites=true'
+  //  'mongodb+srv://gavin:F9hcDb4vX!PWk-T@cluster1-blsjo.gcp.mongodb.net/users?retryWrites=true'
   'mongodb://localhost:27017/conference'
 );
 var db = mongoose.connection;
@@ -32,8 +32,8 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-      mongooseConnection: db
-    })
+      mongooseConnection: db,
+    }),
     // cookie: { maxAge: 600000 }
   })
 );
@@ -64,16 +64,25 @@ app.use(function(req, res, next) {
   next(createError(404));
   // maybe add redirect to Login page???
 });
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
-  // res.render('error');
-    res.json(err);
+  res.json({
+    error: {
+      message: err.message,
+    },
+  });
 });
+
+//var port = process.env.PORT || 3000;
+
+// app.listen(port, function() {
+//   console.log('Express server is listening on port', port);
+// });
 
 module.exports = app;

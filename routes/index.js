@@ -8,18 +8,20 @@ var mid = require('../middleware');
  * Send all the talks from the database to be edited/filters etc by the client.
  */
 router.get('/talks/all', mid.loggedIn, (req, res, next) => {
-    Talk.find({}, (err, talks) => {
-        return res.json(talks);
-    })
+  Talk.find({}, (err, talks) => {
+    if (err) return next(err);
+    return res.json(talks);
+  });
 });
 
 /**
  * Get the array of all the talks the client is interested in/registered for.
  */
 router.get('/talks/user', mid.loggedIn, (req, res, next) => {
-    User.find({_id: req.session.userId}, (err, user) => {
-        res.json(user[0].talks);
-    })
+  User.find({ _id: req.session.userId }, (err, user) => {
+    if (err) return next(err);
+    res.json(user[0].talks);
+  });
 });
 
 /**
@@ -30,27 +32,33 @@ router.get('/talks/user', mid.loggedIn, (req, res, next) => {
  * NOTE: this will replace the previous array in the user document.
  */
 router.post('/talks/save', mid.loggedIn, (req, res, next) => {
-    const talks = req.body.talks;
-    const userId = req.session.userId;
+  const talks = req.body.talks;
+  const userId = req.session.userId;
 
-    User.findByIdAndUpdate({_id: userId },
-        {talks: talks},
-        (err, result) => {
-        return res.json(result);
-    });
+  User.findByIdAndUpdate({ _id: userId }, { talks: talks }, (err, result) => {
+    if (err) return next(err);
+    return res.json(result);
+  });
 });
 
+/**
+ * This adds a rating to the users document. It returns a value "nModified" which
+ * indicates whether the user has already reviewd the talk.
+ */
 router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
-    const id = req.params.id;
-    const rating = {
-        userId: req.session.userId,
-        rating: req.body.rating
-    };
-    Talk.update({id: id, 'ratings.userId': {$ne: rating.userId}},
-        {$addToSet: {ratings: rating}},
-        (err, result) => {
-        return res.json(result);
-    });
+  const id = req.params.id;
+  const rating = {
+    userId: req.session.userId,
+    rating: req.body.rating,
+  };
+  Talk.update(
+    { id: id, 'ratings.userId': { $ne: rating.userId } },
+    { $addToSet: { ratings: rating } },
+    (err, result) => {
+      if (err) return next(err);
+      return res.json(result);
+    }
+  );
 });
 
 /**
@@ -58,32 +66,51 @@ router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
  * to be logic on the client to prevent clashing of time lines for talks and for boundry data.
  */
 router.post('/talks/add/:id', mid.loggedIn, async (req, res, next) => {
-    const talkId = req.params.id;
-    const userId = req.session.userId;
+  const talkId = req.params.id;
+  const userId = req.session.userId;
 
-    // search for a talk by id
-    let talkResult;
-    await Talk.find({id: talkId}, (err, result) => {
-        talkResult = result;
-    });
+  // search for a talk by id
+  let talkResult;
+  await Talk.find({ id: talkId }, (err, result) => {
+    talkResult = result;
+  });
 
-    User.update({_id: userId, 'talks.id': {$ne: talkId}},
-        {$push: {talks: talkResult}},
-        (err, result) => {
-        return res.json(result);
-    });
+  User.update(
+    { _id: userId, 'talks.id': { $ne: talkId } },
+    { $push: { talks: talkResult } },
+    (err, result) => {
+      if (err) return next(err);
+      return res.json(result);
+    }
+  );
 });
+
+// router.post('/talks/remove/:id', mid.loggedIn, async (req, res, next) => {
+//   const talkId = req.params.id;
+//   const userId = req.session.userId;
+
+//   User.findByIdAndUpdate(
+//     userId,
+//     { $pull: { talks: { id: talkId } } },
+//     (err, result) => {
+//       if (err) return next(err);
+//       return res.json('removed');
+//     }
+//   );
+// });
 
 router.post('/talks/remove/:id', mid.loggedIn, async (req, res, next) => {
-    const talkId = req.params.id;
-    const userId = req.session.userId;
+  const talkId = req.params.id;
+  const userId = req.session.userId;
 
-    User.findByIdAndUpdate(userId,
-        {$pull: {talks: {id: talkId}}},
-        (err, result) => {
-        return res.json(result);
-    });
+  User.update(
+    { _id: userId },
+    { $pull: { talks: { id: talkId } } },
+    (err, result) => {
+      if (err) return next(err);
+      return res.json(result);
+    }
+  );
 });
-
 
 module.exports = router;
