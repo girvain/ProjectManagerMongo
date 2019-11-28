@@ -17,7 +17,11 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  talks: []
+  talks: [
+      {
+        type: Object
+      }
+  ]
 });
 
 // authenticate input against database documents

@@ -16,13 +16,14 @@ router.get('/talks/all', mid.loggedIn, (req, res, next) => {
 /**
  * Get the array of all the talks the client is interested in/registered for.
  */
-router.get('/talks/user', mid.loggedIn, async (req, res, next) => {
-    await User.find({_id: req.session.userId}, (err, user) => {
+router.get('/talks/user', mid.loggedIn, (req, res, next) => {
+    User.find({_id: req.session.userId}, (err, user) => {
         res.json(user[0].talks);
     })
 });
 
 /**
+ * TODO: this isn't being used right and meybe needs to come out or add some sorta sync functionality
  * Send a new array of values to be updated on the server. Ideal for when the user
  * is adding and removing a lot on the client. Should only be sent when the client is
  * finished, i.e with a "save" button etc.
@@ -56,23 +57,29 @@ router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
  * Add a talk to the users document. It will not add any duplicate ID's but there needs
  * to be logic on the client to prevent clashing of time lines for talks and for boundry data.
  */
-router.post('/talks/add/:id', mid.loggedIn, (req, res, next) => {
+router.post('/talks/add/:id', mid.loggedIn, async (req, res, next) => {
     const talkId = req.params.id;
     const userId = req.session.userId;
 
-    User.update({_id: userId, 'talks': {$ne: talkId}},
-        {$push: {talks: talkId}},
+    // search for a talk by id
+    let talkResult;
+    await Talk.find({id: talkId}, (err, result) => {
+        talkResult = result;
+    });
+
+    User.update({_id: userId, 'talks.id': {$ne: talkId}},
+        {$push: {talks: talkResult}},
         (err, result) => {
         return res.json(result);
     });
 });
 
-router.post('/talks/remove/:id', mid.loggedIn, (req, res, next) => {
+router.post('/talks/remove/:id', mid.loggedIn, async (req, res, next) => {
     const talkId = req.params.id;
     const userId = req.session.userId;
 
     User.findByIdAndUpdate(userId,
-        {$pull: {talks: talkId}},
+        {$pull: {talks: {id: talkId}}},
         (err, result) => {
         return res.json(result);
     });
