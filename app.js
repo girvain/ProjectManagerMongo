@@ -34,11 +34,11 @@ app.use(
     store: new MongoStore({
       mongooseConnection: db,
     }),
-    // cookie: { maxAge: 600000 }
+    cookie: { maxAge: 9000 },
   })
 );
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
 
 // make user ID available in templates
 app.use(function(req, res, next) {

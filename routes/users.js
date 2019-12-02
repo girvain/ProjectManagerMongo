@@ -58,6 +58,7 @@ router.post('/register', (req, res, next) => {
 
 // POST /login
 router.post('/login', function(req, res, next) {
+  console.log(req.body);
   const { email, password } = req.body;
   let errors = [];
 

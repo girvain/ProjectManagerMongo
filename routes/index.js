@@ -7,7 +7,7 @@ var mid = require('../middleware');
 /**
  * Send all the talks from the database to be edited/filters etc by the client.
  */
-router.get('/talks/all', mid.loggedIn, (req, res, next) => {
+router.get('/talks/all', (req, res, next) => {
   Talk.find({}, (err, talks) => {
     if (err) return next(err);
     return res.json(talks);
@@ -42,17 +42,18 @@ router.post('/talks/save', mid.loggedIn, (req, res, next) => {
 });
 
 /**
- * This adds a rating to the users document. It returns a value "nModified" which
+ * This adds a rating to the talks document. It returns a value "nModified" which
  * indicates whether the user has already reviewd the talk.
  */
-router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
+router.post('/talks/rate', mid.loggedIn, (req, res, next) => {
   const id = req.params.id;
+  const talkId = req.body.talkId;
   const rating = {
     userId: req.session.userId,
     rating: req.body.rating,
   };
   Talk.update(
-    { id: id, 'ratings.userId': { $ne: rating.userId } },
+    { id: talkId, 'ratings.userId': { $ne: rating.userId } },
     { $addToSet: { ratings: rating } },
     (err, result) => {
       if (err) return next(err);
@@ -61,13 +62,17 @@ router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
   );
 });
 
+//TODO: add the mid.loggedIn back into middleware
 /**
  * Add a talk to the users document. It will not add any duplicate ID's but there needs
  * to be logic on the client to prevent clashing of time lines for talks and for boundry data.
  */
-router.post('/talks/add/:id', mid.loggedIn, async (req, res, next) => {
-  const talkId = req.params.id;
+router.post('/talks/add', mid.loggedIn, async (req, res, next) => {
+  const talkId = req.body.talkId;
   const userId = req.session.userId;
+
+  //console.log(req.headers);
+  //console.log(req.body.talkId);
 
   // search for a talk by id
   let talkResult;
