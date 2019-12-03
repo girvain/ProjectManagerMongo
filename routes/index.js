@@ -18,6 +18,15 @@ router.get('/talks/all', (req, res, next) => {
  * Get the array of all the talks the client is interested in/registered for.
  */
 router.get('/talks/user', mid.loggedIn, (req, res, next) => {
+  console.log(req.session.userId);
+  User.find({ _id: req.session.userId }, (err, user) => {
+    if (err) return next(err);
+    res.json(user[0].talks);
+  });
+});
+// additional version as post request.
+router.post('/talks/user', mid.loggedIn, (req, res, next) => {
+  console.log(req.session.userId);
   User.find({ _id: req.session.userId }, (err, user) => {
     if (err) return next(err);
     res.json(user[0].talks);
@@ -45,7 +54,7 @@ router.post('/talks/save', mid.loggedIn, (req, res, next) => {
  * This adds a rating to the talks document. It returns a value "nModified" which
  * indicates whether the user has already reviewd the talk.
  */
-router.post('/talks/rate', mid.loggedIn, (req, res, next) => {
+router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
   const id = req.params.id;
   const talkId = req.body.talkId;
   const rating = {
@@ -53,7 +62,7 @@ router.post('/talks/rate', mid.loggedIn, (req, res, next) => {
     rating: req.body.rating,
   };
   Talk.update(
-    { id: talkId, 'ratings.userId': { $ne: rating.userId } },
+    { id: id, 'ratings.userId': { $ne: rating.userId } },
     { $addToSet: { ratings: rating } },
     (err, result) => {
       if (err) return next(err);
@@ -104,8 +113,8 @@ router.post('/talks/add', mid.loggedIn, async (req, res, next) => {
 //   );
 // });
 
-router.post('/talks/remove/:id', mid.loggedIn, async (req, res, next) => {
-  const talkId = req.params.id;
+router.post('/talks/remove', mid.loggedIn, async (req, res, next) => {
+  const talkId = req.body.talkId;
   const userId = req.session.userId;
 
   User.update(

@@ -35,3 +35,7 @@
    Name
    Password
    Projects
+   
+* Notes for the conference db
+** query to add the json file to db
+   mongoimport --db conference --collection talks --file talks.json --jsonArray
