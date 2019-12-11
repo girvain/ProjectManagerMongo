@@ -49,7 +49,6 @@ router.post('/register', (req, res, next) => {
         });
       } else {
         req.session.userId = user._id;
-        // return res.redirect('/dashboard');
         return res.json('successful registering');
       }
     });
@@ -68,24 +67,26 @@ router.post('/login', function(req, res, next) {
 
   if (errors.length > 0) {
     console.log(req.body);
+    res.statusCode = 401;
     res.json({
       errors,
-      email,
-      password,
+      // email,
+      // password,
     });
   } else {
     User.authenticate(email, password, function(error, user) {
       if (error || !user) {
+        res.statusCode = 401;
         errors.push({ msg: 'Invalid email or password' });
         res.json({
           errors,
-          email,
-          password,
+          // email,
+          // password,
         });
       } else {
         req.session.userId = user._id;
         res.statusCode = 200;
-        return res.json('vvvvellcome');
+        return res.json('sucessfull login');
       }
     });
   }
@@ -98,6 +99,8 @@ router.post('/login', function(req, res, next) {
         return next(err);
       } else {
         //return res.redirect("/");
+        res.statusCode = 200;
+        console.log('session destroyed');
         return res.json({ msg: 'logged out' });
       }
     });

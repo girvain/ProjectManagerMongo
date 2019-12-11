@@ -34,7 +34,7 @@ app.use(
     store: new MongoStore({
       mongooseConnection: db,
     }),
-    cookie: { maxAge: 100000 },
+    cookie: { maxAge: 9000000 },
   })
 );
 
