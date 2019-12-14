@@ -127,4 +127,26 @@ router.post('/talks/remove', mid.loggedIn, async (req, res, next) => {
   );
 });
 
+router.get('/sessions', function(req, res) {
+  console.log('session');
+  res.status(200);
+  res.json([
+    {
+      id: 'A',
+      title: 'Parallel Session A',
+      location: 'Auditorium 1',
+    },
+    {
+      id: 'B',
+      title: 'Parallel Session B',
+      location: 'Room 101',
+    },
+    {
+      id: 'C',
+      title: 'Parallel Session C',
+      location: 'Room 335',
+    },
+  ]);
+});
+
 module.exports = router;
