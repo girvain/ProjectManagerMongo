@@ -71,12 +71,11 @@ router.post('/talks/rate/:id', mid.loggedIn, (req, res, next) => {
   );
 });
 
-//TODO: add the mid.loggedIn back into middleware
 /**
  * Add a talk to the users document. It will not add any duplicate ID's but there needs
  * to be logic on the client to prevent clashing of time lines for talks and for boundry data.
  */
-router.post('/talks/add', mid.loggedIn, async (req, res, next) => {
+router.post('/talks/add', mid.loggedIn, (req, res, next) => {
   const talkId = req.body.talkId;
   const userId = req.session.userId;
 
@@ -85,18 +84,27 @@ router.post('/talks/add', mid.loggedIn, async (req, res, next) => {
 
   // search for a talk by id
   let talkResult;
-  await Talk.find({ id: talkId }, (err, result) => {
+  Talk.find({ id: talkId }, (err, result) => {
     talkResult = result;
+  }).then(result => {
+    User.update(
+      { _id: userId, 'talks.id': { $ne: talkId } },
+      { $push: { talks: result } },
+      (err, result) => {
+        if (err) return next(err);
+        return res.json(result);
+      }
+    );
   });
 
-  User.update(
-    { _id: userId, 'talks.id': { $ne: talkId } },
-    { $push: { talks: talkResult } },
-    (err, result) => {
-      if (err) return next(err);
-      return res.json(result);
-    }
-  );
+  // User.update(
+  //   { _id: userId, 'talks.id': { $ne: talkId } },
+  //   { $push: { talks: talkResult } },
+  //   (err, result) => {
+  //     if (err) return next(err);
+  //     return res.json(result);
+  //   }
+  // );
 });
 
 // router.post('/talks/remove/:id', mid.loggedIn, async (req, res, next) => {
