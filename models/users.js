@@ -1,38 +1,40 @@
-var mongoose = require("mongoose");
-mongoose.Promise = require("bluebird");
-var bcrypt = require("bcrypt");
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+var bcrypt = require('bcrypt');
 var UserSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
     required: true,
-    trim: true
+    trim: true,
   },
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   talks: [
-      {
-        type: Object
-      }
-  ]
+    {
+      type: Object,
+    },
+  ],
 });
+
+UserSchema.index({ email: 1 }, { unique: true });
 
 // authenticate input against database documents
 UserSchema.statics.authenticate = function(email, password, callback) {
   User.findOne({
-    email: email
+    email: email,
   }).exec(function(error, user) {
     if (error) {
       return callback(error);
     } else if (!user) {
-      var err = new Error("User not found.");
+      var err = new Error('User not found.');
       err.status = 401;
       return callback(err);
     }
@@ -47,7 +49,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
   });
 };
 // hash password before saving to database
-UserSchema.pre("save", function(next) {
+UserSchema.pre('save', function(next) {
   var user = this;
   bcrypt.hash(user.password, 10, function(err, hash) {
     if (err) {
@@ -58,5 +60,5 @@ UserSchema.pre("save", function(next) {
   });
 });
 
-var User = mongoose.model("User", UserSchema);
+var User = mongoose.model('User', UserSchema);
 module.exports = User;

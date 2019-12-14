@@ -22,7 +22,7 @@ router.post('/register', (req, res, next) => {
   }
 
   if (errors.length > 0) {
-    res.statusCode = 403;
+    req.statusCode = 403;
     return res.json({
       errors,
       name,
@@ -42,7 +42,7 @@ router.post('/register', (req, res, next) => {
     User.create(userData, function(error, user) {
       if (error || !user) {
         errors.push({ msg: 'Email already in use' });
-        res.statusCode = 403;
+        req.statusCode = 403;
         return res.json({
           errors,
           name,
@@ -51,7 +51,7 @@ router.post('/register', (req, res, next) => {
           //password2,
         });
       } else {
-        res.statusCode = 200;
+        req.statusCode = 200;
         req.session.userId = user._id;
         return res.json('successful registering');
       }

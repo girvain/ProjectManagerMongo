@@ -7,7 +7,9 @@
     "session": "A",
     "time": "9:00-10:00",
     "tags": ["patterns", "archtecture"],
-    "ratings": []
+    "ratings": [],
+    "startTime": "2021-12-17T09:00:00",
+    "endTime": "2021-12-17T10:00:00"
   },
   {
     "id": "2",
@@ -17,7 +19,9 @@
     "session": "A",
     "time": "10:30-11:30",
     "tags": ["javascript", "es6"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T10:30:00",
+    "endTime": "2021-12-17T11:30:00"
   },
   {
     "id": "3",
@@ -25,9 +29,11 @@
     "title": "How to be a Full-Stack Web Developer",
     "description": "Understand the technical foundations, as well as the non-programming skills needed to be a successful full stack web developer. This book reveals the reasons why a truly successful full stack developer does more than write code. ",
     "session": "A",
-    "time": "12:0-13:00",
+    "time": "12:00-13:00",
     "tags": ["full-stack", "continuous delivery"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T12:00:00",
+    "endTime": "2021-12-17T13:00:00"
   },
   {
     "id": "4",
@@ -37,7 +43,9 @@
     "session": "A",
     "time": "14:00-15:00",
     "tags": ["javascript", "frameworks", "react"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T14:00:00",
+    "endTime": "2021-12-17T15:00:00"
   },
   {
     "id": "5",
@@ -47,7 +55,9 @@
     "session": "A",
     "time": "15:30-16:30",
     "tags": ["javascript", "es6"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T15:30:00",
+    "endTime": "2021-12-17T16:30:00"
   },
   {
     "id": "6",
@@ -57,7 +67,9 @@
     "session": "B",
     "time": "9:00-10:00",
     "tags": ["javascript", "frameworks", "angular"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T09:00:00",
+    "endTime": "2021-12-17T10:00:00"
   },
   {
     "id": "7",
@@ -67,7 +79,9 @@
     "session": "B",
     "time": "10:30-11:30",
     "tags": ["frameworks", "react", "full-stack"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T10:30:00",
+    "endTime": "2021-12-17T11:30:00"
   },
   {
     "id": "8",
@@ -75,9 +89,11 @@
     "title": "Get Programming with Node.js",
     "description": "Teaches you to build web servers using JavaScript and Node. In this engaging tutorial, we’ll work through eight complete projects, from writing the code for your first web server to adding live chat to a web app.  ",
     "session": "B",
-    "time": "12:0-13:00",
+    "time": "12:00-13:00",
     "tags": ["node"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T12:00:00",
+    "endTime": "2021-12-17T13:00:00"
   },
   {
     "id": "9",
@@ -87,7 +103,9 @@
     "session": "B",
     "time": "14:00-15:00",
     "tags": ["real-time", "webrtc"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T14:00:00",
+    "endTime": "2021-12-17T15:00:00"
   },
   {
     "id": "10",
@@ -97,7 +115,9 @@
     "session": "B",
     "time": "15:30-16:30",
     "tags": ["real-time", "socket.io"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T15:30:00",
+    "endTime": "2021-12-17T16:30:00"
   },
   {
     "id": "11",
@@ -107,7 +127,9 @@
     "session": "C",
     "time": "9:00-10:00",
     "tags": ["CSS","Sass"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T09:00:00",
+    "endTime": "2021-12-17T10:00:00"
   },
   {
     "id": "12",
@@ -117,7 +139,9 @@
     "session": "C",
     "time": "10:30-11:30",
     "tags": ["CSS","HTML5"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T10:30:00",
+    "endTime": "2021-12-17T11:30:00"
   },
   {
     "id": "13",
@@ -125,9 +149,11 @@
     "title": "JavaScript Security",
     "description": "This session starts off with an introduction to JavaScript security and gives you an overview of the basic functions JavaScript can perform on the Web, both on the client side and the server side. It demonstrates a couple of ways in which RESTful APIs can be laden with security flaws. You will also create a simple RESTful server using Express.js and Node.js. You will then focus on one of the most common JavaScript security attacks, cross-site scripting, and how to prevent cross-site scripting and cross-site forgery.",
     "session": "C",
-    "time": "12:0-13:00",
+    "time": "12:00-13:00",
     "tags": ["CSS","HTML5"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T12:00:00",
+    "endTime": "2021-12-17T13:00:00"
   },
   {
     "id": "14",
@@ -137,7 +163,9 @@
     "session": "C",
     "time": "14:00-15:00",
     "tags": ["unit testing", "mocha"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T14:00:00",
+    "endTime": "2021-12-17T15:00:00"
   },
   {
     "id": "15",
@@ -147,7 +175,9 @@
     "session": "C",
     "time": "15:30-16:30",
     "tags": ["CORS", "security"],
-    "ratings" :[]
+    "ratings" :[],
+    "startTime": "2021-12-17T15:30:00",
+    "endTime": "2021-12-17T16:30:00"
   }
 ]
 
