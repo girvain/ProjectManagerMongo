@@ -9,16 +9,12 @@ var MongoStore = require('connect-mongo')(session);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-// var projectRouter = require('./routes/project');
 
 var cors = require('cors');
 var app = express();
 
 // mongodb connection
 mongoose.connect(
-  //  'mongodb+srv://ross-crawford:L6RZipd2YEkS1o3J@defaultcluster-qldkn.mongodb.net/projectManager?retryWrites=true',
-  // { useNewUrlParser: true }
-  //  'mongodb+srv://gavin:F9hcDb4vX!PWk-T@cluster1-blsjo.gcp.mongodb.net/users?retryWrites=true'
   'mongodb://localhost:27017/conference'
 );
 var db = mongoose.connection;

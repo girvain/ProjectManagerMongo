@@ -24,7 +24,7 @@ var UserSchema = new mongoose.Schema({
   ],
 });
 
-UserSchema.index({ email: 1 }, { unique: true });
+//UserSchema.index({ email: 1 }, { unique: true });
 
 // authenticate input against database documents
 UserSchema.statics.authenticate = function(email, password, callback) {
