@@ -1,3 +1,6 @@
+// Heroku stuff
+const PORT = process.env.PORT || 3000;
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -14,9 +17,13 @@ var cors = require('cors');
 var app = express();
 
 // mongodb connection
+// password
+// HYcSPIim2RDZhSod
 mongoose.connect(
-  'mongodb://localhost:27017/conference'
+  //'mongodb://localhost:27017/conference'
+  'mongodb+srv://gavinross:HYcSPIim2RDZhSod@cluster0-8jxq0.mongodb.net/conference?retryWrites=true&w=majority'
 );
+
 var db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -77,8 +84,8 @@ app.use(function(err, req, res, next) {
 
 //var port = process.env.PORT || 3000;
 
-// app.listen(port, function() {
-//   console.log('Express server is listening on port', port);
+// app.listen(PORT, function() {
+//   console.log('Express server is listening on port ', PORT);
 // });
 
 module.exports = app;

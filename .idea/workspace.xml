@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c55e43d6-a1b1-4ff9-abfe-a8f4e699c741" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/#users.js#" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/project.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,7 +17,7 @@
     <session id="-1510025486">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.8" value="1" />
@@ -45,14 +41,14 @@
         <counts>
           <entry key="js" value="12227" />
           <entry key="json" value="31" />
-          <entry key="txt" value="40" />
+          <entry key="txt" value="49" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="31" />
           <entry key="JavaScript" value="12227" />
-          <entry key="PLAIN_TEXT" value="40" />
+          <entry key="PLAIN_TEXT" value="49" />
         </counts>
       </usages-collector>
     </session>
@@ -125,8 +121,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="762" />
-    <option name="y" value="34" />
+    <option name="x" value="659" />
+    <option name="y" value="81" />
     <option name="width" value="1103" />
     <option name="height" value="978" />
   </component>
@@ -202,7 +198,7 @@
       <workItem from="1574810752074" duration="5412000" />
       <workItem from="1574866052664" duration="10000" />
       <workItem from="1574866112534" duration="26497000" />
-      <workItem from="1576424893593" duration="535000" />
+      <workItem from="1576424893593" duration="570000" />
     </task>
     <task id="LOCAL-00001" summary="hopefully a new project">
       <created>1574867653872</created>
@@ -239,14 +235,21 @@
       <option name="project" value="LOCAL" />
       <updated>1574902031891</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="clean up">
+      <created>1576426471540</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1576426471540</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32454000" />
+    <option name="totallyTimeSpent" value="32489000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="762" y="34" width="1103" height="978" extended-state="0" />
+    <frame x="659" y="81" width="1103" height="978" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.43345657" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -277,7 +280,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="hopefully a new project" />
     <MESSAGE value="fully working API" />
-    <option name="LAST_COMMIT_MESSAGE" value="fully working API" />
+    <MESSAGE value="clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="clean up" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/middleware/index.js">
