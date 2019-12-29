@@ -42,6 +42,12 @@ app.use(
 );
 
 app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
+app.use(
+  cors({
+    credentials: true,
+    origin: 'https://girvain.github.io/conference_uni_project',
+  })
+);
 
 // make user ID available in templates
 app.use(function(req, res, next) {
