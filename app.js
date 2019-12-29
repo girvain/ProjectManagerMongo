@@ -1,5 +1,6 @@
 // Heroku stuff
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 var createError = require('http-errors');
 var express = require('express');
