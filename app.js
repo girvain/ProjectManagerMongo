@@ -84,8 +84,8 @@ app.use(function(err, req, res, next) {
 
 //var port = process.env.PORT || 3000;
 
-// app.listen(PORT, function() {
-//   console.log('Express server is listening on port ', PORT);
-// });
+app.listen(PORT, function() {
+  console.log('Express server is listening on port ', PORT);
+});
 
 module.exports = app;
