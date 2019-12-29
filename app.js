@@ -45,7 +45,7 @@ app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
 app.use(
   cors({
     credentials: true,
-    origin: 'https://girvain.github.io/conference_uni_project/*',
+    origin: 'https://girvain.github.io',
   })
 );
 
